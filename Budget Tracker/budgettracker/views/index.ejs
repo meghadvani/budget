@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Budget Tracker System</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+
+    <h1>Budget Tracker</h1>
+    <div class="container">
+        <div class="form-section">
+            <form action="/add-budget" method="POST">
+                <h3>Add Budget</h3>
+                <input type="number" name="budget" placeholder="Enter budget" required>
+                <button type="submit" class="btn">Add Budget</button>
+            </form>
+
+
+
+            <form action="/add-expense" method="POST">
+                <h3>Add Expense</h3>
+                <input type="text" name="title" placeholder="Expense Title" required>
+
+                <input type="number" name="amount" placeholder="Amount" required>
+                <button type="submit" class="btn">Add Expense</button>
+            </form>
+            <form action="/reset" method="POST">
+                <button type="submit" class="btn reset">Reset All</button>
+            </form>
+        </div>
+
+        
+        <div class="summary">
+            <div>Total Budget: <strong><%= totalBudget.toFixed(2) %></strong></div>
+            <div>Total Expenses: <strong><%= totalExpenses.toFixed(2) %></strong></div>
+
+
+            <div>Budget Left: <strong><%= budgetLeft.toFixed(2) %></strong></div>
+        </div>
+
+        <div class="expenses">
+            <h3>Expense History:</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Expense Name</th>
+                        <th>Amount</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <% expenses.forEach(exp => { %>
+                        <tr>
+                            <td><%= exp.title %></td>
+                            <td><%= exp.amount.toFixed(2) %></td>
+                            <td>
+                                <form action="/remove-expense/<%= exp._id %>" method="POST">
+                                    <button class="btn danger">Remove</button>
+                                </form>
+                            </td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
